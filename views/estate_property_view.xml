@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="action_property_view_offers" model="ir.actions.act_window">
+            <field name="name">Property</field>
+            <field name="res_model">estate.property.offer</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="estate_property_tree_view"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a Property to Advertise
+                </p>
+            </field>
+        </record>
+
+        <record id="estate_property_tree_view" model="ir.ui.view">
+            <field name="name">estate.property.tree</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="type_id"/>
+                    <field name="date_availability"/>
+                    <field name="expected_price"/>
+                    <field name="expected_price"/>
+                    <field name="best_offer"/>
+                    <field name="selling_price"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="estate_property_form_view" model="ir.ui.view">
+            <field name="name">estate.property.form</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                            <button name="action_sold" type="object" string="Sold" class="btn btn-primary"/>
+                            <button name="action_cancel" type="object" string="Cancel" class="btn btn-danger"/>
+                            <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="action_property_view" type="object" icon="fa-handshake-o">
+                                <field name="offer_count" string="Offers" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <group>
+                            <h1>
+                                <field name="name" placeholder="Input Your Property Name"/>
+                            </h1>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field' : 'color'}"
+                            placeholder="Put tags to your property."/>
+                            <group>
+                                <field name="type_id" placeholder="Your Property Type ex. Renovated, Cozy , etc."/>
+                                <field name="postcode" placeholder="The Postcode of Property"/>
+                                <field name="date_availability" placeholder="The date the property is available for sale."/>
+                            </group>
+                            <group>
+                                <field name="expected_price"/>
+                                <field name="best_offer"/>
+                                <field name="selling_price"/>
+                            </group>
+                        </group>
+                        <notebook>
+                                <page string="Descriptions">
+                                    <group>
+                                        <field name="description"/>
+                                        <field name="bedrooms"/>
+                                        <field name="living_area"/>
+                                        <field name="facades"/>
+                                        <field name="garage"/>
+                                        <field name="garden"/>
+                                        <field name="garden_area" attrs="{'invisible': [('garden','=', False)]}"/>
+                                        <field name="garden_orientation" attrs="{'invisible': [('garden','=', False)]}"/>
+                                        <field name="total_area"/>
+                                    </group>
+                                </page>
+                                <page string="Offers">
+                                        <field name="offer_ids">
+                                            <tree editable="bottom" decoration-success="status == 'accepted'" decoration-danger="status == 'refused'">
+                                                <field name="price"/>
+                                                <field name="partner_id"/>
+                                                <field name="offer_date" invisible="1"/>
+                                                <field name="validity"/>
+                                                <field name="deadline"/>
+                                                <field name="status" readonly="1"/>
+                                                <button name="action_accepted_offer" type="object" icon="fa-check"/>
+                                                <button name="action_refused_offer" type="object" icon="fa-times"/>
+                                            </tree>
+                                        </field>
+
+                                </page>
+                                <page string="Other Info">
+                                    <group>
+                                        <field name="sales_id"/>
+                                        <field name="buyer_id"/>
+                                        <field name="phone"/>
+                                    </group>
+                                </page>
+                            </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_property" model="ir.actions.act_window">
+            <field name="name">Estate Property</field>
+            <field name="res_model">estate.property</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="estate_property_tree_view"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a Property to Advertise
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>
