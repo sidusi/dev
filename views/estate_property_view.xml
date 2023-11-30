@@ -13,6 +13,69 @@
             </field>
         </record>
 
+        <record id="estate_property_search_view" model="ir.ui.view">
+            <field name="name">estate.property.search</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="state"/>
+                    <field name="type_id"/>
+                    <field name="postcode"/>
+                    <separator/>
+                    <filter string="New" name="new_state" domain="[('state','=','new')]"/>
+                    <filter string="Sold" name="sold_state" domain="[('state','=','sold')]"/>
+                    <separator/>
+                    <filter string="Offer Received" name="received_state" domain="[('state','=','offerReceived')]"/>
+                    <filter string="Offer Accepted" name="accepted_state" domain="[('state','=','offerAccepted')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Status" name="group_by_state" context="{'group_by' : 'state'}"/>
+                        <filter string="Property Type" name="group_by_property_type" context="{'group_by' : 'type_id'}"/>
+                        <filter string="Available From" name="group_by_date_availability" context="{'group_by' : 'date_availability'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="estate_property_kanban_view" model="ir.ui.view">
+            <field name="name">estate.property.kanban</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="type_id" on_create="quick_create" quick_create_view="real_estate.estate_property_quick_form_view">
+                    <field name="name"/>
+                    <field name="state"/>
+                    <field name="type_id"/>
+                    <field name="postcode"/>
+                    <template>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="oe_kanban_detail">
+                                    <strong class="oe_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                    <div class="o_kanban_tags_selection">
+                                        <field name="tag_ids" widget="many2many_tags" options="{'color_field' : 'color'}"/>
+                                        Available From : <field name="date_availability"/>
+                                    </div>
+                                    <div>
+                                        Status : <field name="state"/>
+                                    </div>
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <field name="offer_count"/> Offer(s)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </template>
+                </kanban>
+            </field>
+        </record>
+
+
         <record id="estate_property_tree_view" model="ir.ui.view">
             <field name="name">estate.property.tree</field>
             <field name="model">estate.property</field>
@@ -26,6 +89,21 @@
                     <field name="best_offer"/>
                     <field name="selling_price"/>
                 </tree>
+            </field>
+        </record>
+
+        <record id="estate_property_pivot_view" model="ir.ui.view">
+            <field name="name">estate.property.pivot</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <pivot>
+                    <field name="name" type="row"/>
+                    <field name="selling_price" type="measure"/>
+                    <field name="expected_price" type="measure"/>
+                    <field name="facades" type="measure"/>
+                    <field name="bedrooms" type="measure"/>
+                    <field name="type_id" type="col"/>
+                </pivot>
             </field>
         </record>
 
@@ -105,11 +183,27 @@
             </field>
         </record>
 
+        <record id="estate_property_quick_form_view" model="ir.ui.view">
+            <field name="name">estate.property.form</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name" placeholder="Input Your Property Name"/>
+                        <field name="type_id"/>
+                        <field name="date_availability" placeholder="The date the property is available for sale."/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+
         <record id="action_property" model="ir.actions.act_window">
             <field name="name">Estate Property</field>
             <field name="res_model">estate.property</field>
-            <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="estate_property_tree_view"/>
+            <field name="view_mode">kanban,tree,form,pivot</field>
+            <field name="view_id" ref="estate_property_kanban_view"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
                     Create a Property to Advertise
