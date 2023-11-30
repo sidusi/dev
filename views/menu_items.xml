@@ -6,7 +6,7 @@
         </menuitem>
         <menuitem id="menu_real_estate_settings" name="Settings">
             <menuitem id="menu_estate_property_type" name="Property Type" action="real_estate.action_property_type"/>
-            <menuitem id="menu_estate_property_tag" name="Property Tag" action="real_estate.action_property_tag"/>
+            <menuitem id="menu_estate_property_tag" name="Property Tag" action="real_estate.action_property_tag" groups="real_estate.group_property_manager"/>
             <menuitem id="menu_estate_property_offer" name="Property Offer" action="real_estate.action_property_offer"/>
         </menuitem>
     </menuitem>
