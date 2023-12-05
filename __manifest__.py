@@ -12,6 +12,7 @@
         'security/ir.model.access.csv',
         'security/res_group.xml',
         'security/model_access.xml',
+        'security/ir_rule.xml',
         'views/estate_property_view.xml',
         'views/property_offer.xml',
         'views/property_type.xml',

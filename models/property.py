@@ -43,7 +43,7 @@ class Property(models.Model):
     )
     total_area = fields.Integer(string="Total Area(sqm)", compute="_compute_total_area")
     offer_ids = fields.One2many('estate.property.offer', 'property_id', string="Offers")
-    sales_id = fields.Many2one('res.users', string="Salesman")
+    sales_id = fields.Many2one('res.users', string="Salesman", default=lambda self: self.env.user)
     buyer_id = fields.Many2one('res.partner', string="Buyer", domain=[('is_company', '=', True)])
     phone = fields.Char(string="Phone", related='buyer_id.phone')
     offer_count = fields.Integer(string="Offer Count", compute="_compute_offer_count")
