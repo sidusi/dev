@@ -74,6 +74,13 @@ class Property(models.Model):
             'res_model' : 'estate.property.offer'
         }
 
+    def action_url_action(self):
+        return{
+            'type' : 'ir.actions.act_url',
+            'url' : 'https://www.odoo.com/documentation/17.0/developer.html',
+            'target' : 'new',
+        }
+
     @api.depends('offer_ids')
     def _compute_best_offer(self):
         for record in self:
@@ -81,6 +88,10 @@ class Property(models.Model):
                 record.best_offer = max(self.offer_ids.mapped('price'))
             else:
                 record.best_offer = 0
+
+    def _get_report_base_filename(self):
+        self.ensure_one()
+        return 'Estate Property - %s' % self.name
 
 class PropertyType(models.Model):
     _name = 'estate.property.type'
@@ -94,3 +105,5 @@ class PropertyTag(models.Model):
 
     name = fields.Char(string='Name', required=True)
     color = fields.Integer(string="Color")
+
+

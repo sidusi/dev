@@ -223,6 +223,9 @@
                             <button class="oe_stat_button" name="action_property_view" type="object" icon="fa-handshake-o">
                                 <field name="offer_count" string="Offers" widget="statinfo"/>
                             </button>
+                            <button class="oe_stat_button" name="action_url_action" type="object" icon="fa-link">
+                                Tutorials
+                            </button>
                         </div>
                         <group>
                             <h1>
@@ -310,6 +313,37 @@
                     Create a Property to Advertise
                 </p>
             </field>
+        </record>
+
+
+        <record id="action_custom_client_action" model="ir.actions.client">
+            <field name="name">Custom Action Client</field>
+            <field name="tag">custom_client_action</field>
+        </record>
+
+        <record id="action_extend_offer_deadline" model="ir.actions.server">
+            <field name="name">Extend Deadline</field>
+            <field name="model_id" ref="real_estate.model_estate_property_offer"/>
+            <field name="state">code</field>
+            <field name="binding_model_id" ref="real_estate.model_estate_property_offer"/>
+            <field name="binding_view_types">list,form</field>
+            <field name="code">
+                model.extend_offer_deadline()
+            </field>
+        </record>
+
+<!--        cronjob-->
+        <record id="ir_cron_extend_offer_deadline" model="ir.cron">
+            <field name="name">Offers: Extend Deadline Everyday</field>
+            <field name="model_id" ref="real_estate.model_estate_property_offer"/>
+            <field name="state">code</field>
+            <field name="code">
+                model._extend_offer_deadline()
+            </field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+
         </record>
     </data>
 </odoo>

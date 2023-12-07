@@ -86,3 +86,20 @@ class PropertyOffer(models.Model):
                 record.name = f"{record.property_id.name} - {record.partner_id.name}"
             else:
                 record.name = False
+
+
+
+    def extend_offer_deadline(self):
+        active_ids = self._context.get('active_ids',[])
+        if active_ids:
+            # record set
+            offer_ids = self.env['estate.property.offer'].browse(active_ids)
+            # loop
+            for offer in offer_ids:
+                offer.validity = 10
+
+
+    def _extend_offer_deadline(self):
+        offer_ids = self.env['estate.property.offer'].search([])
+        for offer in offer_ids:
+            offer.validity += 1

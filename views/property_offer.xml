@@ -7,10 +7,13 @@
             <field name="model">estate.property.offer</field>
             <field name="arch" type="xml">
                 <tree decoration-success="status == 'accepted'" decoration-danger="status == 'refused'">
-                    <field name="name"/>
+                    <field name="price"/>
                     <field name="status"/>
                     <field name="partner_id"/>
                     <field name="property_id"/>
+                    <field name="offer_date"/>
+                    <field name="validity"/>
+                    <field name="deadline"/>
                 </tree>
             </field>
         </record>
