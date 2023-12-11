@@ -2,6 +2,7 @@ from odoo import fields, models, api
 
 class Property(models.Model):
     _name = 'estate.property'
+    _inherit = ['mail.thread','mail.activity.mixin']
     _description = 'Estate Property'
 
 
@@ -15,7 +16,8 @@ class Property(models.Model):
             ('cancel', 'Cancelled')
         ],
         string="State",
-        default='new'
+        default='new',
+        tracking=True
     )
     tag_ids = fields.Many2many('estate.property.tag',string="Property Tag")
     type_id = fields.Many2one('estate.property.type', string="Property Type")
