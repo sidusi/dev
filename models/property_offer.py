@@ -7,7 +7,7 @@ class PropertyOffer(models.Model):
     _description = 'Estate Property Offer'
 
     name = fields.Char(string="Name", compute="_compute_offer_name")
-    price = fields.Float(string="Price")
+    price = fields.Monetary(string="Price")
     status = fields.Selection(
         [
             ('accepted', 'Accepted'),
@@ -22,6 +22,8 @@ class PropertyOffer(models.Model):
     validity = fields.Integer(string="Validity(Days)", default=7)
     deadline = fields.Date(string="Deadline", compute='_compute_offer_deadline', inverse='_inverse_offer_deadline')
     offer_date = fields.Date(string="Offer Date", default=fields.Date.today())
+    currency_id = fields.Many2one("res.currency", string="Currency",
+                                  default=lambda self: self.env.user.company_id.currency_id)
 
     # api.depends make compute fields with ORM, api.onchange make compute with Form view and it doesn't need to loop the record
 

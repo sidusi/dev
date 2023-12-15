@@ -78,12 +78,12 @@
                     <field name="name"/>
                     <field name="type_id"/>
                     <field name="date_availability"/>
-                    <field name="expected_price"/>
-                    <field name="expected_price"/>
-                    <field name="best_offer"/>
-                    <field name="selling_price"/>
+                    <field name="expected_price" widget="monetary"/>
+                    <field name="best_offer" widget="monetary"/>
+                    <field name="selling_price" widget="monetary"/>
                     <field name="state" widget="badge"/>
                     <field name="sales_id" widget="many2one_avatar_employee"/>
+                    <field name="currency_id" invisible="1"/>
                 </tree>
             </field>
         </record>
@@ -241,9 +241,10 @@
                                 <field name="date_availability" placeholder="The date the property is available for sale."/>
                             </group>
                             <group>
-                                <field name="expected_price"/>
-                                <field name="best_offer"/>
-                                <field name="selling_price"/>
+                                <field name="expected_price" widget="monetary"/>
+                                <field name="best_offer" widget="monetary"/>
+                                <field name="selling_price" widget="monetary"/>
+                                <field name="currency_id" invisible="1"/>
                             </group>
                         </group>
                         <notebook>
