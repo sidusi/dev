@@ -9,7 +9,7 @@
     "category":"Sales",
     "depends":["real_estate","base"],
     "data":[
-        #group
+        "views/res_users.xml"
     ],
     "installable":True,
     "license":"LGPL-3",
