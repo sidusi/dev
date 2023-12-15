@@ -37,7 +37,7 @@
             <field name="name">estate.property.kanban</field>
             <field name="model">estate.property</field>
             <field name="arch" type="xml">
-                <kanban default_group_by="type_id" on_create="quick_create" quick_create_view="real_estate.estate_property_quick_form_view">
+                <kanban default_group_by="state" on_create="quick_create" quick_create_view="real_estate.estate_property_quick_form_view">
                     <field name="name"/>
                     <field name="state"/>
                     <field name="type_id"/>
@@ -83,6 +83,7 @@
                     <field name="best_offer"/>
                     <field name="selling_price"/>
                     <field name="state" widget="badge"/>
+                    <field name="sales_id" widget="many2one_avatar_employee"/>
                 </tree>
             </field>
         </record>
@@ -132,67 +133,68 @@
 
 
 
-        <record id="estate_property_search_view" model="ir.ui.view">
-            <field name="name">estate.property.search</field>
-            <field name="model">estate.property</field>
-            <field name="arch" type="xml">
-                <search>
-                    <field name="name"/>
-                    <field name="state"/>
-                    <field name="postcode"/>
-                    <field name="buyer_id"/>
-                    <filter string="New" name="new_state" domain="[('state', '=' , 'new')]"/>
-                    <filter string="Sold" name="sold_state" domain="[('state', '=' , 'sold')]"/>
-                    <separator/>
-                    <filter string="Offer Received" name="received_state" domain="[('state', '=' , 'offerReceived')]"/>
-                    <filter string="Offer Accepted" name="accept_state" domain="[('state', '=' , 'offerAccepted')]"/>
-                    <separator/>
-                    <group expand="0" string="Group By">
-                        <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
-                    </group>
-                </search>
-            </field>
-        </record>
+<!--        <record id="estate_property_search_view" model="ir.ui.view">-->
+<!--            <field name="name">estate.property.search</field>-->
+<!--            <field name="model">estate.property</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <search>-->
+<!--                    <field name="name"/>-->
+<!--                    <field name="state"/>-->
+<!--                    <field name="postcode"/>-->
+<!--                    <field name="buyer_id"/>-->
+<!--                    <filter string="New" name="new_state" domain="[('state', '=' , 'new')]"/>-->
+<!--                    <filter string="Sold" name="sold_state" domain="[('state', '=' , 'sold')]"/>-->
+<!--                    <separator/>-->
+<!--                    <filter string="Offer Received" name="received_state" domain="[('state', '=' , 'offerReceived')]"/>-->
+<!--                    <filter string="Offer Accepted" name="accept_state" domain="[('state', '=' , 'offerAccepted')]"/>-->
+<!--                    <separator/>-->
+<!--                    <group expand="0" string="Group By">-->
+<!--                        <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>-->
+<!--                    </group>-->
+<!--                </search>-->
+<!--            </field>-->
+<!--        </record>-->
 
 
-        <record id="estate_property_kanban_view" model="ir.ui.view">
-            <field name="name">estate.property.kanban</field>
-            <field name="model">estate.property</field>
-            <field name="arch" type="xml">
-                <kanban default_group_by="state" on_create="quick_create" quick_create_view="real_estate.quick_create_estate_property_form_view">
-                    <field name="name"/>
-                    <field name="state"/>
-                    <field name="postcode"/>
-                    <field name="buyer_id"/>
-                    <template>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click">
-                                <div class="oe_kanban_details">
-                                    <strong class="o_kanban_record_title">
-                                        <field name="name"/>
-                                    </strong>
-                                    <div class="oe_kanban_tags_selection">
-                                        <field name="tag_ids" widget="many2many_tags" option="{'color_fielf':'color'}"/>
-                                    </div>
-                                    <div class="o_kanban_record_bottom">
-                                        <div class="oe_kanban_bottom_left">
-                                            <field name="offer_count"/> Offer(s)
-                                        </div>
-                                        <div>
-                                            Best Offer(s) <field name="best_offer"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </t>
-                    </template>
-                </kanban>
-            </field>
-        </record>
+<!--        <record id="estate_property_kanban_view" model="ir.ui.view">-->
+<!--            <field name="name">estate.property.kanban</field>-->
+<!--            <field name="model">estate.property</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <kanban default_group_by="state" on_create="quick_create" quick_create_view="real_estate.quick_create_estate_property_form_view">-->
+<!--                    <field name="name"/>-->
+<!--                    <field name="state"/>-->
+<!--                    <field name="postcode"/>-->
+<!--                    <field name="buyer_id"/>-->
+<!--                    <template>-->
+<!--                        <t t-name="kanban-box">-->
+<!--                            <div class="oe_kanban_global_click">-->
+<!--                                <div class="oe_kanban_details">-->
+<!--                                    <strong class="o_kanban_record_title">-->
+<!--                                        <field name="name"/>-->
+<!--                                    </strong>-->
+<!--                                    <div class="oe_kanban_tags_selection">-->
+<!--                                        <field name="tag_ids" widget="many2many_tags" option="{'color_fielf':'color'}"/>-->
+<!--                                    </div>-->
+<!--                                    <div class="o_kanban_record_bottom">-->
+<!--                                        <div class="oe_kanban_bottom_left">-->
+<!--                                            <field name="offer_count"/> Offer(s)-->
+<!--                                        </div>-->
+<!--                                        <div>-->
+<!--                                            Best Offer(s) <field name="best_offer"/>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </t>-->
+<!--                    </template>-->
+<!--                </kanban>-->
+<!--            </field>-->
+<!--        </record>-->
 
         <record id="quick_create_estate_property_form_view" model="ir.ui.view">
             <field name="name">estate.property.form</field>
             <field name="model">estate.property</field>
+            <field name="priority">1000</field>
             <field name="arch" type="xml">
                 <form>
                     <group>
@@ -291,19 +293,19 @@
             </field>
         </record>
 
-        <record id="estate_property_quick_form_view" model="ir.ui.view">
-            <field name="name">estate.property.form</field>
-            <field name="model">estate.property</field>
-            <field name="arch" type="xml">
-                <form>
-                    <group>
-                        <field name="name" placeholder="Input Your Property Name"/>
-                        <field name="type_id"/>
-                        <field name="date_availability" placeholder="The date the property is available for sale."/>
-                    </group>
-                </form>
-            </field>
-        </record>
+<!--        <record id="estate_property_quick_form_view" model="ir.ui.view">-->
+<!--            <field name="name">estate.property.form</field>-->
+<!--            <field name="model">estate.property</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <form>-->
+<!--                    <group>-->
+<!--                        <field name="name" placeholder="Input Your Property Name"/>-->
+<!--                        <field name="type_id"/>-->
+<!--                        <field name="date_availability" placeholder="The date the property is available for sale."/>-->
+<!--                    </group>-->
+<!--                </form>-->
+<!--            </field>-->
+<!--        </record>-->
 
 
 

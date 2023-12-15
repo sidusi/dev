@@ -17,7 +17,8 @@ class Property(models.Model):
         ],
         string="State",
         default='new',
-        tracking=True
+        tracking=True,
+        group_expand = '_expand_state'
     )
     tag_ids = fields.Many2many('estate.property.tag',string="Property Tag")
     type_id = fields.Many2one('estate.property.type', string="Property Type")
@@ -94,6 +95,11 @@ class Property(models.Model):
     def _get_report_base_filename(self):
         self.ensure_one()
         return 'Estate Property - %s' % self.name
+
+    def _expand_state(self, states, domain, order):
+        return[
+            key for key, dummy in type(self).state.selection
+        ]
 
 class PropertyType(models.Model):
     _name = 'estate.property.type'
